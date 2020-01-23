@@ -1,7 +1,8 @@
 #include "gpio.h"
+#include "timers.h"
 #include "sevenSegConfig.h"
 #include "sevenSeg.h"
-#include "softwareDelay.h"
+
 
 /**
  * Description: 
@@ -72,6 +73,7 @@ void sevenSegWrite(En_SevenSegId_t en_segment_id, uint8_t u8_number){
 	
 		gpioPinWrite(SEG_BCD_GPIO,SEG_BCD_BITS,(u8_number));
 	}
+	
 }
 /**
  * Description: 
@@ -82,10 +84,11 @@ void sevenSegWrite2Numbers(uint8_t u8_number){
 		uint8_t units,tenth;
 		units = u8_number%10;
 		tenth = u8_number/10;
-		sevenSegWrite(SEG_1,units);
-		softwareDelayMs(1);
-		sevenSegWrite(SEG_0,tenth);
-		softwareDelayMs(1);
+		sevenSegWrite(SEG_0,units);
+		timer1DelayMs(1);
+		sevenSegWrite(SEG_1,tenth);
+		//timer1DelayMs(1);
+		
 		
 	}
 }
